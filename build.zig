@@ -22,6 +22,15 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
+    exe.linkLibC();
+    //exe.addIncludePath(b.path("c-src")); // Look for C source files
+    exe.addCSourceFiles(.{
+        .files = &[_][]const u8{
+            "c-src/sqlite3.c",
+        },
+    });
+    exe.installHeader(b.path("c-src/sqlite3.h"), "sqlite3.h");
+
     // This declares intent for the executable to be installed into the
     // standard location when the user invokes the "install" step (the default
     // step when running `zig build`).
