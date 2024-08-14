@@ -63,7 +63,14 @@ pub fn build(b: *std.Build) void {
         .root_source_file = b.path("src/main.zig"),
         .target = target,
         .optimize = optimize,
+        .link_libc = true,
     });
+    exe_unit_tests.addCSourceFiles(.{
+        .files = &[_][]const u8{
+            "c-src/sqlite3.c",
+        },
+    });
+    exe_unit_tests.installHeader(b.path("c-src/sqlite3.h"), "sqlite3.h");
 
     const run_exe_unit_tests = b.addRunArtifact(exe_unit_tests);
 

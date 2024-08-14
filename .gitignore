@@ -1,3 +1,4 @@
 .zig-cache
 zig-out
 *.sqlite3
+.env
